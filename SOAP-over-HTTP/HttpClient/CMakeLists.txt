@@ -8,16 +8,14 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package (XercesC REQUIRED)
 find_package(Boost REQUIRED)
 find_package(OpenSSL REQUIRED)
-# Add the include directories for libasio
-#include_directories(/usr/include/xercesc)
-#include_directories(/usr/local/include/boost)
-#include_directories(/usr/local/include/asio)
 
 add_subdirectory(Networking)
+add_subdirectory(BenchmarkTests)
+add_subdirectory(Domain)
 
 add_executable(HttpClient main.cpp)
 
-target_link_libraries(HttpClient PRIVATE Networking XercesC::XercesC OpenSSL::SSL)
+target_link_libraries(HttpClient PRIVATE Networking Domain XercesC::XercesC OpenSSL::SSL)
 
 
 install(TARGETS HttpClient

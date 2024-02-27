@@ -19,18 +19,50 @@ public:
     HttpsSession& operator=(const HttpsSession& other) = delete;
     HttpsSession& operator=(HttpsSession&& other) = delete;
 
+    /**
+     * @brief Run
+     */
     void Run();
 
 private:
+
+    /**
+     * @brief Read
+     */
     void Read();
+
+    /**
+     * @brief OnRead
+     * @param ec
+     * @param bytesTransferred
+     */
     void OnRead(boost::beast::error_code ec,
                 std::size_t bytesTransferred);
+
+    /**
+     * @brief HandleRequest
+     * @return
+     */
+    boost::beast::http::response<boost::beast::http::string_body> HandleRequest();
+
+    /**
+     * @brief Write
+     */
     void Write();
-    void OnWrite();
+
+    /**
+     * @brief OnWrite
+     * @param ec
+     * @param bytes_transferred
+     */
+    void OnWrite(boost::beast::error_code ec,
+                 std::size_t bytes_transferred);
+
     void CloseSocket();
 
     boost::beast::flat_buffer m_buffer;
     boost::beast::http::request<boost::beast::http::string_body> m_request;
+    boost::beast::http::response<boost::beast::http::string_body> m_response;
     boost::asio::ssl::stream<boost::asio::ip::tcp::socket> m_stream;
     boost::asio::ssl::context& m_sslContext;
 
@@ -64,7 +96,7 @@ private:
 
 
 class HttpsServer : public std::enable_shared_from_this<HttpsServer> {
-
+    //TODO: Implement server class that will manipulate with Listener and Sessions
 };
 
 } // Networking

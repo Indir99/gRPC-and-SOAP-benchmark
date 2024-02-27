@@ -37,9 +37,92 @@ void HttpsSession::OnRead(boost::beast::error_code ec,
         //Error handling
     }
     std::cout<<"Received meesage: "<<m_request.body() << std::endl;
+    Write();
 }
 
+boost::beast::http::response<boost::beast::http::string_body> HttpsSession::HandleRequest()
+{
+    namespace http = boost::beast::http;
+    // Returns a bad request response
+    auto const bad_request =
+        [&](boost::beast::string_view why)
+    {
+        http::response<http::string_body> res{http::status::bad_request, m_request.version()};
+        res.set(http::field::server, BOOST_BEAST_VERSION_STRING);
+        res.set(http::field::content_type, "text/html");
+        res.keep_alive(m_request.keep_alive());
+        res.body() = std::string(why);
+        res.prepare_payload();
+        return res;
+    };
 
+    // Returns a not found response
+    auto const not_found =
+        [&](boost::beast::string_view target)
+    {
+        http::response<http::string_body> res{http::status::not_found, m_request.version()};
+        res.set(http::field::server, BOOST_BEAST_VERSION_STRING);
+        res.set(http::field::content_type, "text/html");
+        res.keep_alive(m_request.keep_alive());
+        res.body() = "The resource '" + std::string(target) + "' was not found.";
+        res.prepare_payload();
+        return res;
+    };
+
+    // Returns a server error response
+    auto const server_error =
+        [&](boost::beast::string_view what)
+    {
+        http::response<http::string_body> res{http::status::internal_server_error, m_request.version()};
+        res.set(http::field::server, BOOST_BEAST_VERSION_STRING);
+        res.set(http::field::content_type, "text/html");
+        res.keep_alive(m_request.keep_alive());
+        res.body() = "An error occurred: '" + std::string(what) + "'";
+        res.prepare_payload();
+        return res;
+    };
+
+    // Make sure we can handle the method
+    if( m_request.method() != http::verb::get &&
+        m_request.method() != http::verb::head &&
+        m_request.method() != http::verb::post)
+        return bad_request("Unknown HTTP-method");
+
+    // Request path must be absolute and not contain "..".
+    if( m_request.target().empty() ||
+        m_request.target()[0] != '/' ||
+        m_request.target().find("..") != boost::beast::string_view::npos)
+        return bad_request("Illegal request-target");
+
+
+    // Respond to POST request
+    http::response<http::string_body> res{http::status::ok, m_request.version()};
+    res.set(http::field::server, BOOST_BEAST_VERSION_STRING);
+    res.set(http::field::content_type, "text/html");
+    res.keep_alive(m_request.keep_alive());
+    res.body() = std::string("dummy Response from server");
+    res.prepare_payload();
+    return res;
+}
+
+void HttpsSession::Write(){
+    m_response = HandleRequest();
+    // Write the response
+    boost::beast::http::async_write(m_stream.next_layer(),
+                              m_response,
+                              boost::beast::bind_front_handler(&HttpsSession::OnWrite,
+                                                               shared_from_this()));
+}
+
+void HttpsSession::OnWrite(boost::beast::error_code ec,
+                           std::size_t bytes_transferred) {
+    boost::ignore_unused(bytes_transferred);
+
+    if(ec) {
+        // Error Handling
+    }
+    // TODO: Decide next step
+}
 
 HttpsListener::HttpsListener(std::string address, unsigned short port, boost::asio::ssl::context& sslContext)
     : m_ioContext{}
