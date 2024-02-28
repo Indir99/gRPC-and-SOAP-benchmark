@@ -103,9 +103,9 @@ private:
 
     //TODO: Implement follwing method
     /**
-     * @brief HandeRequest
+     * @brief HandleResponse
      */
-    void HandeRequest();
+    void HandleResponse();
 
     boost::asio::io_context m_ioContext;
     boost::asio::ip::tcp::resolver m_resolver;

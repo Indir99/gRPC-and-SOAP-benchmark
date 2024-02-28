@@ -10,10 +10,11 @@ find_package(Boost REQUIRED)
 find_package(OpenSSL REQUIRED)
 
 add_subdirectory(Networking)
+add_subdirectory(Domain)
 
 add_executable(HttpServer main.cpp)
 
-target_link_libraries(HttpServer PRIVATE Networking XercesC::XercesC OpenSSL::SSL)
+target_link_libraries(HttpServer PRIVATE Networking Domain XercesC::XercesC OpenSSL::SSL)
 
 install(TARGETS HttpServer
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}

@@ -1,11 +1,54 @@
 #include <iostream>
 #include <benchmark/benchmark.h>
 #include <../Domain/SoapMessageCreator.h>
+#include <../Domain/XmlParser.h>
 
-int main(){
+static void BM_SoapMessageCreationProbe(benchmark::State& state) {
     Domain::InitializeLibrary();
-    auto message{Domain::PrepareSimpleSoapMessage()};
+    for (auto _ : state) {
+        auto message{Domain::PrepareProbeMessage()};
+    }
     Domain::DeinitializeLibrary();
-    std::cout<<"Message: " << message << std::endl;
-    return 0;
 }
+// Register the function as a benchmark
+BENCHMARK(BM_SoapMessageCreationProbe);
+
+static void BM_SoapMessageCreationProbeMatch(benchmark::State& state) {
+    Domain::InitializeLibrary();
+    for (auto _ : state) {
+        auto message{Domain::PrepareProbeMatchMessage()};
+    }
+    Domain::DeinitializeLibrary();
+}
+// Register the function as a benchmark
+BENCHMARK(BM_SoapMessageCreationProbeMatch);
+
+static void BM_SoapMessageParsingProbe(benchmark::State& state) {
+    Domain::InitializeLibrary();
+    auto message{Domain::PrepareProbeMessage()};
+    for (auto _ : state) {
+        Domain::XmlParser parser{};
+        parser.ParseMessage(message);
+        Domain::ProbeData probe;
+        parser.GetProbeData(probe);
+    }
+    Domain::DeinitializeLibrary();
+}
+// Register the function as a benchmark
+BENCHMARK(BM_SoapMessageParsingProbe);
+
+static void BM_SoapMessageParsingProbeMatch(benchmark::State& state) {
+    Domain::InitializeLibrary();
+    auto message{Domain::PrepareProbeMatchMessage()};
+    for (auto _ : state) {
+        Domain::XmlParser parser{};
+        parser.ParseMessage(message);
+        Domain::ProbeMatchData probe;
+        parser.GetProbeMatchData(probe);
+    }
+    Domain::DeinitializeLibrary();
+}
+// Register the function as a benchmark
+BENCHMARK(BM_SoapMessageParsingProbeMatch);
+
+BENCHMARK_MAIN();

@@ -1,4 +1,5 @@
 #include "HttpsClient.h"
+#include "../Domain/XmlParser.h"
 #include <iostream>
 
 namespace Networking {
@@ -162,7 +163,17 @@ void HttpsClient::OnRead(boost::beast::error_code ec,
     }
     CloseSocket();
     // Do whatever you want with message
-    std::cout<<m_response.body()<<std::endl;
+    HandleResponse();
+}
+
+void HttpsClient::HandleResponse(){
+    Domain::XmlParser parser{};
+    parser.ParseMessage(m_response.body());
+    Domain::ProbeMatchData probe;
+    parser.GetProbeMatchData(probe);
+    if(not probe.deviceName.empty()){
+        std::cout<<"Device name: " << probe.deviceName << std::endl;
+    }
 }
 
 void HttpsClient::CloseSocket(){

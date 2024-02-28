@@ -1,4 +1,6 @@
 #include "HttpsServer.h"
+#include "../Domain/SoapMessageCreator.h"
+#include "../Domain/XmlParser.h"
 #include <iostream>
 
 namespace Networking {
@@ -36,7 +38,6 @@ void HttpsSession::OnRead(boost::beast::error_code ec,
     if(ec) {
         //Error handling
     }
-    std::cout<<"Received meesage: "<<m_request.body() << std::endl;
     Write();
 }
 
@@ -94,13 +95,21 @@ boost::beast::http::response<boost::beast::http::string_body> HttpsSession::Hand
         m_request.target().find("..") != boost::beast::string_view::npos)
         return bad_request("Illegal request-target");
 
+    // Added just for testing
+    Domain::XmlParser parser{};
+    parser.ParseMessage(m_request.body());
+    Domain::ProbeData probe;
+    parser.GetProbeData(probe);
+    if(not probe.deviceName.empty()) {
+        std::cout<<"Device name: "<< probe.deviceName <<std::endl;
+    }
 
     // Respond to POST request
     http::response<http::string_body> res{http::status::ok, m_request.version()};
     res.set(http::field::server, BOOST_BEAST_VERSION_STRING);
     res.set(http::field::content_type, "text/html");
     res.keep_alive(m_request.keep_alive());
-    res.body() = std::string("dummy Response from server");
+    res.body() = Domain::PrepareProbeMatchMessage();
     res.prepare_payload();
     return res;
 }
