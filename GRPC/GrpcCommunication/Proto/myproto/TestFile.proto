@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+service TestService {
+    rpc Probe(ProbeMsg) returns(ProbeMsgResponse) {}
+}
+
+// Probe
+message ProbeMsg {
+    int32 medicalDeviceId = 1;
+    string medicalDeviceName = 2;
+    string medicalDeviceType = 3;
+}
+message ProbeMsgResponse {
+    int32 medicalServerId = 1;
+    string medicalServerName = 2;
+    bool probeMatch = 3;
+}
+
