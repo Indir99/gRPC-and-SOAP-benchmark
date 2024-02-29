@@ -8,10 +8,11 @@
 
 int main()
 {
-    Domain::InitializeLibrary();
-
     // Get the current time before the code execution
     auto start = std::chrono::high_resolution_clock::now();
+
+    Domain::InitializeLibrary();
+
     std::string host{"127.0.0.1"};
     std::string port{"8080"};
     boost::asio::ssl::context ctx{boost::asio::ssl::context::tlsv13_client};
@@ -20,14 +21,14 @@ int main()
     auto message{Domain::PrepareProbeMessage()};
     client->SendRequest(message);
 
+    Domain::DeinitializeLibrary();
+
     // Get the current time after the code execution
     auto end = std::chrono::high_resolution_clock::now();
     // Calculate the duration by subtracting start time from end time
     auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
     // Output the duration
     std::cout << "Execution time: " << duration.count() << " microseconds" << std::endl;
-
-    Domain::DeinitializeLibrary();
 
     return 0;
 }

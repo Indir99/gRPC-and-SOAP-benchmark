@@ -8,13 +8,13 @@ find_package(Threads)
 #
 set(SOURCES
     main.cpp
-    #Client.h
-    #Client.cpp
-    #ClientInfo.h
+    Client.h
+    Client.cpp
+    ClientInfo.h
+    ClientInfo.cpp
 )
 
 source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${SOURCES})
-
 
 #
 # Target
