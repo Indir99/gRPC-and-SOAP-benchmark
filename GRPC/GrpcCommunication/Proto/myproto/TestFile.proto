@@ -16,3 +16,21 @@ message ProbeMsgResponse {
     bool probeMatch = 3;
 }
 
+message TherapyData {
+    string patientID = 1;
+    string patientFirstName = 2;
+    string patientLastName = 3;
+    string doctorID = 4;
+    string doctorFirstName = 5;
+    string doctorLastName = 6;
+    string therapyName = 7;
+    string therapyStatus = 8;
+    string currentTime = 9;
+}
+
+message TherapyList {
+    repeated TherapyData therapies = 1;
+}
+
+
+

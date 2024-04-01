@@ -25,6 +25,10 @@ public:
 
     void GetProbeData(ProbeData& probe);
 
+    void GetTherapyData(TherapyData& therapyData);
+
+    void GetTherapyListData(TherapyList& therapyList);
+
 private:
     std::unique_ptr<XmlHandler> m_handlerPtr;
     std::unique_ptr<xercesc::SAX2XMLReader> m_parserPtr;

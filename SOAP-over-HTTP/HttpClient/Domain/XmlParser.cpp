@@ -56,4 +56,72 @@ void XmlParser::GetProbeMatchData(ProbeMatchData& probe){
     }
 }
 
+void XmlParser::GetTherapyData(TherapyData& therapyData){
+    GetHeaderData(therapyData);
+    for(const auto& element : m_handlerPtr->m_xmlElementsVector) {
+        if(element.m_elementName == "mb:PatientID"){
+            therapyData.patientID = element.m_elementValue;
+        }
+        if(element.m_elementName == "mb:PatientFirstName"){
+            therapyData.patientFirstName = element.m_elementValue;
+        }
+        if(element.m_elementName == "mb:PatientLastName"){
+            therapyData.patientLastName = element.m_elementValue;
+        }
+        if(element.m_elementName == "mb:DoctorID"){
+            therapyData.doctorID = element.m_elementValue;
+        }
+        if(element.m_elementName == "mb:DoctorFirstName"){
+            therapyData.doctorFirstName = element.m_elementValue;
+        }
+        if(element.m_elementName == "mb:DoctorLastName"){
+            therapyData.doctortLastName = element.m_elementValue;
+        }
+        if(element.m_elementName == "mb:TherapyName"){
+            therapyData.therapyName = element.m_elementValue;
+        }
+        if(element.m_elementName == "mb:TherapyStatus"){
+            therapyData.therapyStatus = element.m_elementValue;
+        }
+        if(element.m_elementName == "mb:CurrentTime"){
+            therapyData.time = element.m_elementValue;
+        }
+    }
+}
+
+void XmlParser::GetTherapyListData(TherapyList& therapyList){
+    GetHeaderData(therapyList);
+    TherapyData therapyData;
+    for(const auto& element : m_handlerPtr->m_xmlElementsVector) {
+        if(element.m_elementName == "mb:PatientID"){
+            therapyData.patientID = element.m_elementValue;
+        }
+        if(element.m_elementName == "mb:PatientFirstName"){
+            therapyData.patientFirstName = element.m_elementValue;
+        }
+        if(element.m_elementName == "mb:PatientLastName"){
+            therapyData.patientLastName = element.m_elementValue;
+        }
+        if(element.m_elementName == "mb:DoctorID"){
+            therapyData.doctorID = element.m_elementValue;
+        }
+        if(element.m_elementName == "mb:DoctorFirstName"){
+            therapyData.doctorFirstName = element.m_elementValue;
+        }
+        if(element.m_elementName == "mb:DoctorLastName"){
+            therapyData.doctortLastName = element.m_elementValue;
+        }
+        if(element.m_elementName == "mb:TherapyName"){
+            therapyData.therapyName = element.m_elementValue;
+        }
+        if(element.m_elementName == "mb:TherapyStatus"){
+            therapyData.therapyStatus = element.m_elementValue;
+        }
+        if(element.m_elementName == "mb:CurrentTime"){
+            therapyData.time = element.m_elementValue;
+            therapyList.therapyList.push_back(therapyData);
+        }
+    }
+}
+
 } // Domain
