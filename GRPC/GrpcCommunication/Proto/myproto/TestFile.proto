@@ -2,6 +2,8 @@ syntax = "proto3";
 
 service TestService {
     rpc Probe(ProbeMsg) returns(ProbeMsgResponse) {}
+    rpc TherapyDataMessage(TherapyData) returns(TherapyData) {}
+    rpc TherapyListMessage(TherapyList) returns(TherapyList) {}
 }
 
 // Probe

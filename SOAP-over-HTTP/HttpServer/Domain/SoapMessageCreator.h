@@ -25,5 +25,14 @@ void DeinitializeLibrary();
 
 std::string PrepareProbeMessage();
 std::string PrepareProbeMatchMessage();
+std::string PrepareTherapyMessage(std::string patientID,
+                                  std::string patientFirstName,
+                                  std::string patientLastName,
+                                  std::string doctorID,
+                                  std::string doctorFirstName,
+                                  std::string doctorLastName,
+                                  std::string therapyName,
+                                  std::string therapyStatus);
+std::string PrepareTherapyListMessage();
 
 } // Domain

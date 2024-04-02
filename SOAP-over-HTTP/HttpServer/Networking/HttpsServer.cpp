@@ -96,20 +96,47 @@ boost::beast::http::response<boost::beast::http::string_body> HttpsSession::Hand
         return bad_request("Illegal request-target");
 
     // Added just for testing
-    Domain::XmlParser parser{};
-    parser.ParseMessage(m_request.body());
-    Domain::ProbeData probe;
-    parser.GetProbeData(probe);
-    if(not probe.deviceName.empty()) {
-        std::cout<<"Device name: "<< probe.deviceName <<std::endl;
-    }
+//    Domain::XmlParser parser{};
+//    parser.ParseMessage(m_request.body());
+//    Domain::ProbeData probe;
+//    parser.GetProbeData(probe);
+//    if(not probe.deviceName.empty()) {
+//        std::cout<<"Device name: "<< probe.deviceName <<std::endl;
+//    }
+    // Added just for testing
+//    Domain::XmlParser parser{};
+//    parser.ParseMessage(m_request.body());
+//    Domain::TherapyData thData;
+//    parser.GetTherapyData(thData);
+//    if(not thData.therapyName.empty()){
+//        thData.print();
+//    }
+
+    // Added just for testing
+//    Domain::XmlParser parser{};
+//    parser.ParseMessage(m_request.body());
+//    Domain::TherapyList thList;
+//    parser.GetTherapyListData(thList);
+//    if(not thList.therapyList.empty()){
+//        thList.print();
+//    }
+
 
     // Respond to POST request
     http::response<http::string_body> res{http::status::ok, m_request.version()};
     res.set(http::field::server, BOOST_BEAST_VERSION_STRING);
     res.set(http::field::content_type, "text/html");
     res.keep_alive(m_request.keep_alive());
-    res.body() = Domain::PrepareProbeMatchMessage();
+    //res.body() = Domain::PrepareProbeMatchMessage();
+//    res.body() = Domain::PrepareTherapyMessage("P001",
+//                                               "John",
+//                                               "Johanson",
+//                                               "D001",
+//                                               "Mark",
+//                                               "Waston",
+//                                               "Medication A",
+//                                               "Started");
+    res.body() = Domain::PrepareTherapyListMessage();
     res.prepare_payload();
     return res;
 }
@@ -131,6 +158,7 @@ void HttpsSession::OnWrite(boost::beast::error_code ec,
         // Error Handling
     }
     // TODO: Decide next step
+    Read();
 }
 
 HttpsListener::HttpsListener(std::string address, unsigned short port, boost::asio::ssl::context& sslContext)

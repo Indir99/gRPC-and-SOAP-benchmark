@@ -63,7 +63,7 @@ static void BM_GrpcMessageCreationProbe(benchmark::State& state) {
     }
 }
 // Register the function as a benchmark
-BENCHMARK(BM_GrpcMessageCreationProbe);
+//BENCHMARK(BM_GrpcMessageCreationProbe);
 
 static void BM_GrpcMessageCreationProbeMatch(benchmark::State& state) {
     std::string serverName{"name"};
@@ -73,7 +73,7 @@ static void BM_GrpcMessageCreationProbeMatch(benchmark::State& state) {
     }
 }
 // Register the function as a benchmark
-BENCHMARK(BM_GrpcMessageCreationProbeMatch);
+//BENCHMARK(BM_GrpcMessageCreationProbeMatch);
 
 
 static void BM_GrpcMessageCreationTherapyData(benchmark::State& state){
@@ -111,7 +111,7 @@ static void BM_GrpcMessageParsingProbe(benchmark::State& state) {
     }
 }
 // Register the function as a benchmark
-BENCHMARK(BM_GrpcMessageParsingProbe);
+//BENCHMARK(BM_GrpcMessageParsingProbe);
 
 static void BM_GrpcMessageParsingProbeMatch(benchmark::State& state) {
     std::string serverName{"name"};
@@ -126,7 +126,7 @@ static void BM_GrpcMessageParsingProbeMatch(benchmark::State& state) {
     }
 }
 // Register the function as a benchmark
-BENCHMARK(BM_GrpcMessageParsingProbeMatch);
+//BENCHMARK(BM_GrpcMessageParsingProbeMatch);
 
 static void BM_GrpcMessageParsingTherapyData(benchmark::State& state){
     TherapyData thData = PrepareTherapyData("P001", "John", "Johanson", "D001", "Mark", "Waston", "Medication A", "Started");

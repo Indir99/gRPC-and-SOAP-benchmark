@@ -11,6 +11,8 @@ int main(int argc, char* argv[])
     clientInformations.SetClientInfo();
     GrpcClient client{"localhost:50051", clientInformations};
     client.SendProbe();
+    client.SendTherapyData();
+    client.SendTherapyList();
 
     // Get the current time after the code execution
     auto end = std::chrono::high_resolution_clock::now();

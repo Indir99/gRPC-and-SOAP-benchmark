@@ -161,18 +161,43 @@ void HttpsClient::OnRead(boost::beast::error_code ec,
     if(0 == bytesTransferred) {
         // Add error Handling
     }
-    CloseSocket();
+    //CloseSocket();
     // Do whatever you want with message
     HandleResponse();
+    m_restMessages--;
+    if(m_restMessages){
+        Write();
+    } else {
+        CloseSocket();
+    }
 }
 
 void HttpsClient::HandleResponse(){
+    std::cout<<"Called"<<std::endl;
+//    Domain::XmlParser parser{};
+//    parser.ParseMessage(m_response.body());
+//    Domain::ProbeMatchData probe;
+//    parser.GetProbeMatchData(probe);
+//    if(not probe.deviceName.empty()){
+//        std::cout<<"Device name: " << probe.deviceName << std::endl;
+//    }
+//    Domain::XmlParser parser{};
+//    parser.ParseMessage(m_response.body());
+//    Domain::TherapyData thData;
+//    parser.GetTherapyData(thData);
+//    if(not thData.therapyName.empty()){
+//        thData.print();
+//    }
+    try{
     Domain::XmlParser parser{};
     parser.ParseMessage(m_response.body());
-    Domain::ProbeMatchData probe;
-    parser.GetProbeMatchData(probe);
-    if(not probe.deviceName.empty()){
-        std::cout<<"Device name: " << probe.deviceName << std::endl;
+    Domain::TherapyList thList;
+    parser.GetTherapyListData(thList);
+    thList.print();
+    m_response.body().clear();
+    } catch (...) {
+        std::cout<<m_response.body() << std::endl;
+        std::cout<<"here"<<std::endl;
     }
 }
 

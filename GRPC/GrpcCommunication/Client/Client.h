@@ -13,6 +13,8 @@ public:
                ClientInfo clInfo);
 
     void SendProbe();
+    void SendTherapyData();
+    void SendTherapyList();
 private:
     std::unique_ptr<TestService::Stub> m_stub;
     std::shared_ptr<grpc::Channel> m_channel;

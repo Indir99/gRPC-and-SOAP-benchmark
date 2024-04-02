@@ -8,6 +8,15 @@ constexpr std::array CLIENT_NAME{"GrpcClientForTesting"};
 constexpr std::array CLIENT_TYPE{"RandomType"};
 
 ProbeMsg PrepareProbeData(int id, std::string& clientName, std::string& clientType);
+std::string GetCurrentTime();
+TherapyData PrepareTherapyData(std::string patientID,
+                               std::string patientFirstName,
+                               std::string patientLastName,
+                               std::string doctorID,
+                               std::string doctorFirstName,
+                               std::string doctorLastName,
+                               std::string therapyName,
+                               std::string therapyStatus);
 
 struct ClientInfo {
     int clientId;

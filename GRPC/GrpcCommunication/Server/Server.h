@@ -13,6 +13,14 @@ public:
                                  const ::ProbeMsg* request,
                                  ::ProbeMsgResponse* response) override;
 
+    virtual ::grpc::Status TherapyDataMessage(::grpc::ServerContext* context,
+                                              const ::TherapyData* request,
+                                              ::TherapyData* response) override;
+
+    virtual ::grpc::Status TherapyListMessage(::grpc::ServerContext* context,
+                                              const ::TherapyList* request,
+                                              ::TherapyList* response) override;
+
 private:
     bool ValidateDevice(const ::ProbeMsg* data);
     bool ValidateDeviceById(int id);

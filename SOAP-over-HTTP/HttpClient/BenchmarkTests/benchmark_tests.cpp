@@ -57,7 +57,7 @@ static void BM_SoapMessageParsingProbe(benchmark::State& state) {
     Domain::DeinitializeLibrary();
 }
 // Register the function as a benchmark
-BENCHMARK(BM_SoapMessageParsingProbe);
+//BENCHMARK(BM_SoapMessageParsingProbe);
 
 static void BM_SoapMessageParsingProbeMatch(benchmark::State& state) {
     Domain::InitializeLibrary();
@@ -71,7 +71,7 @@ static void BM_SoapMessageParsingProbeMatch(benchmark::State& state) {
     Domain::DeinitializeLibrary();
 }
 // Register the function as a benchmark
-BENCHMARK(BM_SoapMessageParsingProbeMatch);
+//BENCHMARK(BM_SoapMessageParsingProbeMatch);
 
 static void BM_SoapMessageParsingTherapyData(benchmark::State& state) {
     Domain::InitializeLibrary();
@@ -87,7 +87,7 @@ static void BM_SoapMessageParsingTherapyData(benchmark::State& state) {
     Domain::DeinitializeLibrary();
 }
 // Register the function as a benchmark
-BENCHMARK(BM_SoapMessageParsingTherapyData);
+//BENCHMARK(BM_SoapMessageParsingTherapyData);
 
 static void BM_SoapMessageParsingTherapyList(benchmark::State& state) {
     Domain::InitializeLibrary();
@@ -101,7 +101,7 @@ static void BM_SoapMessageParsingTherapyList(benchmark::State& state) {
     Domain::DeinitializeLibrary();
 }
 // Register the function as a benchmark
-BENCHMARK(BM_SoapMessageParsingTherapyList);
+//BENCHMARK(BM_SoapMessageParsingTherapyList);
 
 
 BENCHMARK_MAIN();

@@ -117,6 +117,8 @@ private:
     bool m_useHttps;
     std::string m_host;
     std::string m_port;
+    // for some tests
+    int m_restMessages = 3;
 };
 
 } // Networking
